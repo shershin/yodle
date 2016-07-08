@@ -18,7 +18,7 @@
     document.getElementById("open").addEventListener('change', function(){
       var read = new FileReader();
       read.onload = function() {
-        
+
         var str = "" + this.result;
         //remove the new lines first incase they are read as white spaces
         str = str.replace(/(?:\r\n|\r|\n)/g, '.');
@@ -27,11 +27,12 @@
         //console.log(str);
         //build the array now
 
+
         var arry = [];
         var x = 0;
-        var y = 0;
+        var holder = 0;
         var num = 0;
-        arry[y] = [];
+        //arry[y] = [];
         var strHold = "";
 
         while (num < str.length){
@@ -40,7 +41,7 @@
             //if char === empty space just keep moving
             //but dont forget to have the arry location = strHold
             //reset strHold
-            arry[y,x] = "" + strHold;
+            arry[x] = parseInt(strHold);
             //console.log("test" + strHold);
             x++;
             strHold = "";
@@ -48,8 +49,8 @@
             //ah a new line
             //for this we have to increase y
             //but reset x
-            y++;
-            x = 0;
+            arry[x] = "br";
+            x++;
           } else {
             //finally the hard part
             //here we just keep grabing the current char till we hit a . or ,
@@ -58,7 +59,9 @@
           }
           num++;
         }
+        console.log(arry);
         max(arry);
+        //seq(arry);
       }
       read.readAsText(this.files[0]);
     })
@@ -66,31 +69,19 @@
       //finding the largest possible outcome
       var total = 0;
       var num = 0;
-      var betaArry = [];
       var hold = 0;
-      var x = 0;
-      var y = 0;
-      var z = 0;
-      while (num < arry.length){
-        while(x < arry[y,x].length){
-          if(arry[y,x] > hold){
-            hold = arry[y,x];
-            x++;
-          }
-          betaArry[z] = hold;
-          z++;
-          y++;
-          x = 0;
+
+      while(num < arry.length){
+        if(arry[num] > hold){
+          hold = arry[num];
+        } else if (arry[num] === "br"){
+          total += hold;
         }
-      num++;
-      }
-      for(var i = 0; i < betaArry.length; i++){
-        total += parseInbetaArry[i];
+        num++;
       }
 
 
-
-      document.getElementById('max').innerHTML = arry;
+      document.getElementById('max').innerHTML = "maximum total = " + total;
     }
     function seq(arry){
       //finding the largest possible outcome while doing it seequintially
