@@ -61,7 +61,7 @@
         }
         console.log(arry);
         max(arry);
-        //seq(arry);
+        seq(arry);
       }
       read.readAsText(this.files[0]);
     })
@@ -85,6 +85,47 @@
     }
     function seq(arry){
       //finding the largest possible outcome while doing it seequintially
+      var total = 0;
+      var num = 0;
+      var x = 0;
+      var xHold = 0;
+      var counter = 0;
+      var linecounter = 0;
+
+      while(num < arry.length){
+        //console.log("x " + x + " xHold " + xHold);
+        //console.log("total = " + total);
+        if(arry[num] === "br"){
+          x = 0;
+          console.log("line counter = " + linecounter);
+          linecounter++;
+        } else if(x === xHold){
+          //console.log("x = xHold");
+          if(arry[num] < arry[num + 1]){
+            //console.log("num + 1 is the larger one");
+            console.log("x = " + arry[num] + " x + 1 " + arry[num + 1]);
+            xHold++;
+            x = null;
+            total += arry[num + 1];
+            console.log("the count is " + counter);
+            counter++;
+          } else {
+            //console.log("x? " + arry[num]);
+            x = null;
+            total += arry[num];
+            console.log("the count is " + counter);
+            counter++;
+          }
+        } else {
+          if (x !== null){
+            x++;  
+          }
+        }
+        num++;
+      }
+
+
+      document.getElementById('seq').innerHTML = "sequential total = " + total;
     }
   </script>
 </body>
