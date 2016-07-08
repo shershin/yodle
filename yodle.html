@@ -13,18 +13,18 @@
   <div id="max">
   </div>
   <script type="text/javascript">
-  console.log('here');
+
   var arry = [];
     document.getElementById("open").addEventListener('change', function(){
       var read = new FileReader();
       read.onload = function() {
-        console.log("got here");
+        
         var str = "" + this.result;
         //remove the new lines first incase they are read as white spaces
         str = str.replace(/(?:\r\n|\r|\n)/g, '.');
         //remove the remaining white spaces
         str = str.replace(/(?:\s)/g, ',');
-        console.log(str);
+        //console.log(str);
         //build the array now
 
         var arry = [];
@@ -32,19 +32,19 @@
         var y = 0;
         var num = 0;
         arry[y] = [];
+        var strHold = "";
 
         while (num < str.length){
           var char = str.charAt(num);
-          var strHold = "";
           if(char === ","){
             //if char === empty space just keep moving
             //but dont forget to have the arry location = strHold
             //reset strHold
             arry[y,x] = "" + strHold;
+            //console.log("test" + strHold);
             x++;
             strHold = "";
           } else if (char === "."){
-            console.log("break");
             //ah a new line
             //for this we have to increase y
             //but reset x
@@ -54,6 +54,7 @@
             //finally the hard part
             //here we just keep grabing the current char till we hit a . or ,
             strHold += char;
+            //console.log("test " + strHold);
           }
           num++;
         }
@@ -89,7 +90,7 @@
 
 
 
-      document.getElementById('max').innerHTML = total;
+      document.getElementById('max').innerHTML = arry;
     }
     function seq(arry){
       //finding the largest possible outcome while doing it seequintially
