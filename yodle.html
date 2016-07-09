@@ -8,7 +8,7 @@
   </input>
   <pre id="content">
   </pre>
-  <div id="seq">
+  <div id="adj">
   </div>
   <div id="max">
   </div>
@@ -61,7 +61,7 @@
         }
         console.log(arry);
         max(arry);
-        seq(arry);
+        adj(arry);
       }
       read.readAsText(this.files[0]);
     })
@@ -83,49 +83,67 @@
 
       document.getElementById('max').innerHTML = "maximum total = " + total;
     }
-    function seq(arry){
+    function adj(arry){
       //finding the largest possible outcome while doing it seequintially
       var total = 0;
       var num = 0;
       var x = 0;
       var xHold = 0;
-      var counter = 0;
-      var linecounter = 0;
 
       while(num < arry.length){
-        //console.log("x " + x + " xHold " + xHold);
-        //console.log("total = " + total);
         if(arry[num] === "br"){
           x = 0;
-          console.log("line counter = " + linecounter);
-          linecounter++;
         } else if(x === xHold){
-          //console.log("x = xHold");
+          console.log("checking " + arry[num - 1] + " ??? " + arry[num] + " ??? " + arry[num + 1]);
           if(arry[num] < arry[num + 1]){
-            //console.log("num + 1 is the larger one");
-            console.log("x = " + arry[num] + " x + 1 " + arry[num + 1]);
-            xHold++;
-            x = null;
-            total += arry[num + 1];
-            console.log("the count is " + counter);
-            counter++;
+            // + 1
+            if (arry[num - 1] < arry[num + 1]){
+              xHold++;
+              x = null;
+              total += arry[num + 1];
+              console.log("added " + arry[num + 1]);
+            } else if (arry[num] < arry[num - 1]){
+              xHold--;
+              x = null;
+              total += arry[num - 1];
+              console.log("added " + arry[num - 1]);
+            } else {
+              x = null;
+              total += arry[num];
+              console.log("added " + arry[num]);
+            }
+          } else if (arry[num] < arry[num - 1]){
+            // - 1
+            if(arry[num + 1] < arry[num - 1]){
+              xHold--;
+              x = null;
+              total += arry[num - 1];
+              console.log("added " + arry[num - 1]);
+            } else if (arry[num] < arry[num + 1]){
+              xHold++;
+              x = null;
+              total += arry[num + 1];
+              console.log("added " + arry[num + 1]);
+            } else {
+              x = null;
+              total += arry[num];
+              console.log("added " + arry[num]);
+            }
           } else {
-            //console.log("x? " + arry[num]);
             x = null;
             total += arry[num];
-            console.log("the count is " + counter);
-            counter++;
+            console.log("added " + arry[num]);
           }
         } else {
           if (x !== null){
-            x++;  
+            x++;
           }
         }
         num++;
       }
 
 
-      document.getElementById('seq').innerHTML = "sequential total = " + total;
+      document.getElementById('adj').innerHTML = "adjuential total = " + total;
     }
   </script>
 </body>
